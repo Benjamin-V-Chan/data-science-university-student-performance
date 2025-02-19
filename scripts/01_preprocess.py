@@ -1,5 +1,17 @@
-# Load the dataset
-# Drop duplicates and handle missing values
+import pandas as pd
+
+# Load dataset
+df = pd.read_csv("data/academic_performance_dataset_V2.csv")
+
+# Drop duplicates
+df = df.drop_duplicates()
+
 # Standardize column names
-# Convert categorical variables (e.g., Gender, Program Code) to numerical representations if needed
-# Save the cleaned dataset to `outputs/cleaned_data.csv`
+df.columns = df.columns.str.strip().str.lower().str.replace(" ", "_")
+
+# Convert categorical variables if needed
+df["gender"] = df["gender"].map({"Male": 0, "Female": 1})  # Encode gender
+
+# Save cleaned dataset
+df.to_csv("outputs/cleaned_data.csv", index=False)
+print("Preprocessing complete. Cleaned data saved to outputs/cleaned_data.csv.")
